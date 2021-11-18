@@ -36,17 +36,4 @@ public class LogRepository {
             return true;
         }
     }
-
-    public static void deleteLog(String ip, String endpoint) throws SQLException {
-        try {
-            String query = "DELETE FROM log_request WHERE ip='" + ip + "' AND endpoint='" + endpoint + "'";
-            System.out.println(query);
-            Connection conn = DatabaseService.getService().getConn();
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate(query);
-        } catch (Exception e) {
-            System.out.println("Fail to Delete Log");
-            e.printStackTrace();
-        }
-    }
 }

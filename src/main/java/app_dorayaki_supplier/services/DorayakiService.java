@@ -15,7 +15,7 @@ import app_dorayaki_supplier.repository.LogRepository;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-@WebService()
+@WebService
 @SOAPBinding(style = SOAPBinding.Style.DOCUMENT)
 public class DorayakiService {
     private static final DorayakiRepo repo = new DorayakiRepo();
@@ -28,7 +28,6 @@ public class DorayakiService {
         String endpoint = "/dorayaki";
         LogRepository.insertLog(ip, endpoint);
         if (LogRepository.checkLimit(ip, endpoint)) {
-            LogRepository.deleteLog(ip, endpoint);
             return new ArrayList<Dorayaki>();
         } else {
             try {
