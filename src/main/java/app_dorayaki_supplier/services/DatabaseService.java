@@ -10,21 +10,21 @@ public class DatabaseService {
         String URL = "jdbc:mysql://localhost/dorayaki_factory";
         String USER_NAME = "root";
         String PWD = "123456";
-        try{
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             this.conn = DriverManager.getConnection(URL, USER_NAME, PWD);
             System.out.println("CONNECTED TO DORAYAKI_FACTORY");
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("COULDNT ACCESS DATABASE");
         }
     }
 
-    public Connection getConn(){
+    public Connection getConn() {
         return this.conn;
     }
 
-    public static DatabaseService getService(){
+    public static DatabaseService getService() {
         return DatabaseService.db;
     }
 }
