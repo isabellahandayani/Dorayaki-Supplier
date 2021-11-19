@@ -8,12 +8,14 @@ import javax.annotation.Resource;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.ws.WebServiceContext;
+import javax.xml.ws.handler.MessageContext;
 
 import org.apache.http.client.ClientProtocolException;
-import org.json.JSONObject;
 
 import app_dorayaki_supplier.models.Request;
+import app_dorayaki_supplier.repository.LogRepository;
 import app_dorayaki_supplier.repository.RequestRepo;
 
 @WebService
@@ -24,6 +26,20 @@ public class RequestService {
 
   @WebMethod
   public ArrayList<Request> getRequests() throws SQLException, ClientProtocolException, IOException {
-    return repo.getAllRequest();
+    HttpServletRequest request = (HttpServletRequest)context.getMessageContext().get(MessageContext.SERVLET_REQUEST);
+    String ip = request.getRemoteAddr();
+    String endpoint = "/request";
+    LogRepository.insertLog(ip, endpoint);
+    if (LogRepository.checkLimit(ip, endpoint)) {
+        return new ArrayList<Request>();
+    } else {
+        try {
+            return repo.getAllRequest();
+        } catch (Exception e) {
+            System.out.println("FAIL TO GET REQUESTS");
+            e.printStackTrace();
+            return new ArrayList<Request>();
+        }
+    }
   }
 }
