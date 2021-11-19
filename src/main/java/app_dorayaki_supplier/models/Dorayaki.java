@@ -1,14 +1,26 @@
 package app_dorayaki_supplier.models;
 
+import org.json.JSONObject;
+
 public class Dorayaki {
-    private Long id;
+    private Integer id;
     private String dorayaki_name;
 
-    public Long getId() {
+    public Dorayaki (Integer id, String dorayaki_name) {
+        this.id = id;
+        this.dorayaki_name = dorayaki_name;
+    }
+
+    public Dorayaki(JSONObject json) {
+        this.id = json.getInt("id");
+        this.dorayaki_name = json.getString("dorayaki_name");
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
