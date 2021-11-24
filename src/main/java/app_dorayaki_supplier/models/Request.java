@@ -1,16 +1,14 @@
 package app_dorayaki_supplier.models;
 
-import java.sql.Date;
-
 import org.json.JSONObject;
 
 public class Request {
   private Integer id_dorayaki;
   private Integer stok_added;
   private String status;
-  private Date created_at;
+  private String created_at;
 
-  public Request(Integer id_dorayaki, Integer stok_added, String status, Date created_at) {
+  public Request(Integer id_dorayaki, Integer stok_added, String status, String created_at) {
     this.id_dorayaki = id_dorayaki;
     this.stok_added = stok_added;
     this.status = status;
@@ -21,7 +19,7 @@ public class Request {
     this.id_dorayaki = json.getInt("id_dorayaki");
     this.stok_added = json.getInt("stok_added");
     this.status = json.getString("status");
-    // this.created_at = Date.valueOf(json.getString("createdAt"));
+    this.created_at = json.getString("createdAt");
   }
 
   public Integer getIdDorayaki() {
@@ -48,11 +46,11 @@ public class Request {
     this.status = status;
   }
 
-  public Date getCreatedAt() {
+  public String getCreatedAt() {
     return created_at;
   }
 
-  public void setCreatedAt(Date created_at) {
+  public void setCreatedAt(String created_at) {
     this.created_at = created_at;
   }
 }
