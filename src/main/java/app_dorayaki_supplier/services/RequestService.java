@@ -42,4 +42,25 @@ public class RequestService {
         }
     }
   }
+
+  @WebMethod
+  public Boolean postRequest(Integer id_dorayaki, Integer stok_added) throws SQLException, ClientProtocolException, IOException {
+    HttpServletRequest request = (HttpServletRequest)context.getMessageContext().get(MessageContext.SERVLET_REQUEST);
+    String ip = request.getRemoteAddr();
+    String endpoint = "/request/create";
+
+    LogRepository.insertLog(ip, endpoint);
+
+    if (LogRepository.checkLimit(ip, endpoint)) {
+        return repo.makeNewRequest(new Request(id_dorayaki, stok_added, "not validated", ""));
+    } else {
+        try {
+            return true;
+        } catch (Exception e) {
+            System.out.println("FAIL TO GET REQUESTS");
+            e.printStackTrace();
+            return false;
+        }
+    }
+  }
 }

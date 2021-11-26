@@ -6,12 +6,18 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -42,5 +48,25 @@ public class RequestRepo {
     }
 
     return requests;
+  }
+
+  public Boolean makeNewRequest(Request r) throws ClientProtocolException, IOException {
+    System.out.println("KOCAK");
+    HttpPost post = new HttpPost(ENDPOINT_URL + "/request/create");
+    CloseableHttpClient client = HttpClients.createDefault();
+
+    List<NameValuePair> params = new ArrayList<NameValuePair>();
+    params.add(new BasicNameValuePair("id_dorayaki", r.getIdDorayaki().toString()));
+    params.add(new BasicNameValuePair("stok_added", r.getStokAdded().toString()));
+    post.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+
+    CloseableHttpResponse response = client.execute(post);
+    HttpEntity entity = response.getEntity();
+    System.out.println(response);
+    System.out.println(entity);
+    if (response.getStatusLine().getStatusCode() == 200) {
+      client.close();
+      return true;
+    } else return false;
   }
 }
