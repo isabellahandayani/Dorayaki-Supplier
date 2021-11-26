@@ -10,7 +10,7 @@ public class DatabaseService {
     public DatabaseService() {
         String URL = "jdbc:mysql://localhost/dorayaki_factory?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
         String USER_NAME = "root";
-        String PWD = "";
+        String PWD = "123456";
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             this.conn = DriverManager.getConnection(URL, USER_NAME, PWD);

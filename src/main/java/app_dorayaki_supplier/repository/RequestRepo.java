@@ -41,7 +41,6 @@ public class RequestRepo {
     String responseBody = EntityUtils.toString(response.getEntity(), encoding);
     JSONObject json = new JSONObject(responseBody);
     JSONArray dataArr = json.getJSONArray("data");
-
     ArrayList<Request> requests = new ArrayList<Request>();
     for (int i = 0; i < dataArr.length(); i++) {
       requests.add(new Request(dataArr.getJSONObject(i)));
@@ -51,7 +50,6 @@ public class RequestRepo {
   }
 
   public Boolean makeNewRequest(Request r) throws ClientProtocolException, IOException {
-    System.out.println("KOCAK");
     HttpPost post = new HttpPost(ENDPOINT_URL + "/request/create");
     CloseableHttpClient client = HttpClients.createDefault();
 
@@ -66,6 +64,7 @@ public class RequestRepo {
     System.out.println(entity);
     if (response.getStatusLine().getStatusCode() == 200) {
       client.close();
+      System.out.println("APA");
       return true;
     } else return false;
   }

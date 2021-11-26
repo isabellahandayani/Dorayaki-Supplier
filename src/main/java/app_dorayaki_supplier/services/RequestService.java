@@ -49,18 +49,18 @@ public class RequestService {
     String ip = request.getRemoteAddr();
     String endpoint = "/request/create";
 
-    LogRepository.insertLog(ip, endpoint);
+        LogRepository.insertLog(ip, endpoint);
 
-    if (LogRepository.checkLimit(ip, endpoint)) {
-        return repo.makeNewRequest(new Request(id_dorayaki, stok_added, "not validated", ""));
-    } else {
-        try {
-            return true;
-        } catch (Exception e) {
-            System.out.println("FAIL TO GET REQUESTS");
-            e.printStackTrace();
+        if (LogRepository.checkLimit(ip, endpoint)) {
             return false;
+        } else {
+            try {
+                return repo.makeNewRequest(new Request(id_dorayaki, stok_added, "not validated", ""));
+            } catch (Exception e) {
+                System.out.println("FAIL TO GET REQUESTS");
+                e.printStackTrace();
+                return false;
+            }
         }
     }
-  }
 }
